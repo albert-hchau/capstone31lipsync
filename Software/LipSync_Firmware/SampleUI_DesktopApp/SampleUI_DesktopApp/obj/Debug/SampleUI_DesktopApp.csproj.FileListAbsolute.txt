@@ -1,0 +1,15 @@
+C:\Users\Albert\Documents\ELEC\Capstone\Software Team\SampleUI_DesktopApp\SampleUI_DesktopApp\bin\Debug\SampleUI_DesktopApp.exe.config
+C:\Users\Albert\Documents\ELEC\Capstone\Software Team\SampleUI_DesktopApp\SampleUI_DesktopApp\bin\Debug\SampleUI_DesktopApp.exe
+C:\Users\Albert\Documents\ELEC\Capstone\Software Team\SampleUI_DesktopApp\SampleUI_DesktopApp\bin\Debug\SampleUI_DesktopApp.pdb
+C:\Users\Albert\Documents\ELEC\Capstone\Software Team\SampleUI_DesktopApp\SampleUI_DesktopApp\obj\Debug\SampleUI_DesktopApp.csprojResolveAssemblyReference.cache
+C:\Users\Albert\Documents\ELEC\Capstone\Software Team\SampleUI_DesktopApp\SampleUI_DesktopApp\obj\Debug\MainWindow.g.cs
+C:\Users\Albert\Documents\ELEC\Capstone\Software Team\SampleUI_DesktopApp\SampleUI_DesktopApp\obj\Debug\App.g.cs
+C:\Users\Albert\Documents\ELEC\Capstone\Software Team\SampleUI_DesktopApp\SampleUI_DesktopApp\obj\Debug\SampleUI_DesktopApp_MarkupCompile.cache
+C:\Users\Albert\Documents\ELEC\Capstone\Software Team\SampleUI_DesktopApp\SampleUI_DesktopApp\obj\Debug\SampleUI_DesktopApp_MarkupCompile.lref
+C:\Users\Albert\Documents\ELEC\Capstone\Software Team\SampleUI_DesktopApp\SampleUI_DesktopApp\obj\Debug\MainWindow.baml
+C:\Users\Albert\Documents\ELEC\Capstone\Software Team\SampleUI_DesktopApp\SampleUI_DesktopApp\obj\Debug\SampleUI_DesktopApp.g.resources
+C:\Users\Albert\Documents\ELEC\Capstone\Software Team\SampleUI_DesktopApp\SampleUI_DesktopApp\obj\Debug\SampleUI_DesktopApp.Properties.Resources.resources
+C:\Users\Albert\Documents\ELEC\Capstone\Software Team\SampleUI_DesktopApp\SampleUI_DesktopApp\obj\Debug\SampleUI_DesktopApp.csproj.GenerateResource.Cache
+C:\Users\Albert\Documents\ELEC\Capstone\Software Team\SampleUI_DesktopApp\SampleUI_DesktopApp\obj\Debug\SampleUI_DesktopApp.csproj.CoreCompileInputs.cache
+C:\Users\Albert\Documents\ELEC\Capstone\Software Team\SampleUI_DesktopApp\SampleUI_DesktopApp\obj\Debug\SampleUI_DesktopApp.exe
+C:\Users\Albert\Documents\ELEC\Capstone\Software Team\SampleUI_DesktopApp\SampleUI_DesktopApp\obj\Debug\SampleUI_DesktopApp.pdb

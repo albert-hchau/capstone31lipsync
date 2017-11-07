@@ -1,0 +1,20 @@
+﻿<Window x:Class="SampleUI_DesktopApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleUI_DesktopApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="251.6" Width="297">
+    <Grid Margin="0,0,-6.6,6.6">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="17*"/>
+            <ColumnDefinition Width="487*"/>
+            <ColumnDefinition Width="21*"/>
+        </Grid.ColumnDefinitions>
+        <Button Content="Upload" Grid.Column="1" HorizontalAlignment="Left" Margin="99.4,158,0,0" VerticalAlignment="Top" Width="75" Height="19" Click="Button_Click"/>
+        <Label Content="Enter Blink Time: " Grid.Column="1" HorizontalAlignment="Left" Margin="76.4,84,0,0" VerticalAlignment="Top" Width="155" Height="26"/>
+        <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="76.4,115,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged"/>
+
+    </Grid>
+</Window>
