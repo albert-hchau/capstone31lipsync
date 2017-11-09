@@ -1,0 +1,3 @@
+[submodule "lipsync-desktop"]
+	path = lipsync-desktop
+	url = https://github.com/xjlim/lipsync-desktop
