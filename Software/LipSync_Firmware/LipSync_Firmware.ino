@@ -86,6 +86,11 @@
    14 Apr 2017
    15 Apr 2017
    24 Apr 2017
+   07 Nov 2017 - changed xl/xh/yl/yh/x_right/x_left/y_up/y_down to add "_temp" to each variable, so they can be used in shifting the axis -> also with x/y right/left/up/down
+                 added coded (untested) to shift the axis based on a user input
+                 added xh/xl/yh/yl _user variables to represent the values given when a user goes to calibrate the axis (it will ask them to push the joystick 'up' and read an x/y)
+                 added theta variable for axis rotation calculation
+                 changed Joystick Initialization function to use x_(left/right)_temp and y_(up/down)_temp
 */
 
 #include <EEPROM.h>
@@ -111,8 +116,9 @@
 
 //***VARIABLE DECLARATION***//
 
-int xh, yh, xl, yl;                               // xh: x-high, yh: y-high, xl: x-low, yl: y-low
-int x_right, x_left, y_up, y_down;                // individual neutral starting positions for each FSR
+int xh, yh, xl, yl, xh_temp, yh_temp, xl_temp, yl_temp;                               // xh: x-high, yh: y-high, xl: x-low, yl: y-low
+int xh_user, yh_user, xl_user, yl_user;           // variables acquired from a user calibration program - not yet done
+int x_right, x_left, y_up, y_down, x_right_temp, x_left_temp, y_up_temp, y_down_temp;                // individual neutral starting positions for each FSR
 
 int xh_max, xl_max, yh_max, yl_max;               // may just declare these variables but not initialize them because
 // these values will be pulled from the EEPROM
@@ -120,6 +126,7 @@ int xh_max, xl_max, yh_max, yl_max;               // may just declare these vari
 float constant_radius = 30.0;                     // constant radius is initialized to 30.0 but may be changed in joystick initialization
 float xh_yh_radius, xh_yl_radius, xl_yl_radius, xl_yh_radius;
 float xh_yh, xh_yl, xl_yl, xl_yh;
+float theta;                                      // used in axis rotation calculation
 int box_delta;                                    // the delta value for the boundary range in all 4 directions about the x,y center
 int cursor_delta;                                 // amount cursor moves in some single or combined direction
 int speed_counter = 4;                            // cursor speed counter
@@ -294,10 +301,39 @@ void loop() {
     }
     //*/
 
-  xh = analogRead(X_DIR_HIGH);                    // A0 :: NOT CORRECT MAPPINGS
-  xl = analogRead(X_DIR_LOW);                     // A1
-  yh = analogRead(Y_DIR_HIGH);                    // A2
-  yl = analogRead(Y_DIR_LOW);                     // A10
+  xh_temp = analogRead(X_DIR_HIGH);                    // A0 :: NOT CORRECT MAPPINGS
+  xl_temp = analogRead(X_DIR_LOW);                     // A1
+  yh_temp = analogRead(Y_DIR_HIGH);                    // A2  
+  yl_temp = analogRead(Y_DIR_LOW);                     // A10
+
+  if(((xh_user - x_right_temp) > 0) && ((yh_user - y_up_temp) > 0)){
+    theta = atan(xh_user/yh_user);
+  }
+
+  else if(((xl_user - x_left_temp) > 0) && ((yh_user - y_up_temp) > 0)){
+    theta = atan(xl_user/yh_user);
+  }
+
+  else if(((xl_user - x_left_temp) > 0) && ((yl_user - y_down_temp) > 0)){
+    theta = atan(xl_user/yl_user);
+  }
+
+  else if(((xh_user - x_right_temp) > 0) && ((yl_user - y_down_temp) > 0)){
+    theta = atan(xh_user/yl_user);
+  }
+
+  xl = xl_temp*cos(theta) + yh_temp*sin(theta);
+  yh = -xl_temp*sin(theta) + yh_temp*cos(theta);
+  xh = xh_temp*cos(theta) + yl_temp*sin(theta);
+  yl = -xh_temp*sin(theta) + yl_temp*cos(theta);
+
+  x_left = x_left_temp*cos(theta) + y_up_temp*sin(theta);
+  y_up = -x_left_temp*sin(theta) + y_up_temp*cos(theta);
+  x_right = x_right_temp*cos(theta) + y_down_temp*sin(theta);
+  y_down = -x_right_temp*sin(theta) + y_down_temp*cos(theta);
+
+
+  
 ///*
   xh_yh = sqrt(sq(((xh - x_right) > 0) ? (float)(xh - x_right) : 0.0) + sq(((yh - y_up) > 0) ? (float)(yh - y_up) : 0.0));     // sq() function raises input to power of 2, returning the same data type int->int ...
   xh_yl = sqrt(sq(((xh - x_right) > 0) ? (float)(xh - x_right) : 0.0) + sq(((yl - y_down) > 0) ? (float)(yl - y_down) : 0.0));   // the sqrt() function raises input to power 1/2, returning a float type
@@ -890,10 +926,10 @@ void Joystick_Initialization(void) {
   yl = analogRead(Y_DIR_LOW);             // Initial neutral y-low value of joystick
   delay(10);
 
-  x_right = xh;
-  x_left = xl;
-  y_up = yh;
-  y_down = yl;
+  x_right_temp = xh;
+  x_left_temp = xl;
+  y_up_temp = yh;
+  y_down_temp = yl;
 
   EEPROM.get(6, yh_comp);
   delay(10);
