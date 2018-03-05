@@ -3,11 +3,10 @@
 #include <Mouse.h>
 #include <math.h>
 
-
 //***PIN ASSIGNMENTS***//
 
 #define MODE_SELECT 12                            // LipSync Mode Select - USB mode (comm_mode = 0; jumper on) or Bluetooth mode (comm_mode = 1; jumper off) - digital input pin 12 (internally pulled-up)
-#define PUSH_BUTTON_UP 8                          // Cursor Control Button 1: UP - digital input pin 8 (internally pulled-up)4
+#define PUSH_BUTTON_UP 8                          // Cursor Control Button 1: UP - digital input pin 8 (internally pulled-up)
 #define PUSH_BUTTON_DOWN 7                        // Cursor Control Button 2: DOWN - digital input pin 7 (internally pulled-up)
 #define LED_1 11                                   // LipSync LED Color1 : GREEN - digital output pin 5
 #define LED_2 5                                   // LipSync LED Color2 : RED - digital outputpin 4
@@ -24,7 +23,7 @@
 int xh, yh, xl, yl; 
 float xh_yh, xh_yl, xl_yl, xl_yh;
 float x_right, x_left, y_up, y_down;
-int cursor_max_speed = 5;
+int cursor_max_speed = 10;
 float yh_comp = 1.0;
 float yl_comp = 1.0;
 float xh_comp = 1.0;
@@ -34,7 +33,7 @@ float xl_max = 750;
 float yh_max = 798;
 float yl_max = 746;
 
-float radius_threshold = 50.0;
+float radius_threshold = 30.0;
 int cursor_delay = 20;
 
 void setup() {
@@ -142,10 +141,9 @@ if ((xh_yh > radius_threshold) || (xh_yl > radius_threshold) || (xl_yl > radius_
           delay(cursor_delay);
           //poll_counter = 0;
         }
-  
+        
+  //delay(100);
   }
-
-  //delay(200);
 }
 
 

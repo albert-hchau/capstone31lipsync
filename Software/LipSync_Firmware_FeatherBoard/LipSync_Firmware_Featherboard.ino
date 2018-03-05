@@ -93,12 +93,12 @@
 #include <math.h>
 
 //***PIN ASSIGNMENTS***//
-/*
+
 #define MODE_SELECT 12                            // LipSync Mode Select - USB mode (comm_mode = 0; jumper on) or Bluetooth mode (comm_mode = 1; jumper off) - digital input pin 12 (internally pulled-up)
 #define PUSH_BUTTON_UP 8                          // Cursor Control Button 1: UP - digital input pin 8 (internally pulled-up)
 #define PUSH_BUTTON_DOWN 7                        // Cursor Control Button 2: DOWN - digital input pin 7 (internally pulled-up)
-#define LED_1 5                                   // LipSync LED Color1 : GREEN - digital output pin 5
-#define LED_2 11                                   // LipSync LED Color2 : RED - digital outputpin 4
+#define LED_1 11                                   // LipSync LED Color1 : GREEN - digital output pin 5
+#define LED_2 5                                   // LipSync LED Color2 : RED - digital outputpin 4
 
 #define TRANS_CONTROL A3                          // Bluetooth Transistor Control Pin - digital output pin A3
 #define PIO4 A4                                   // Bluetooth PIO4 Command Pin - digital output pin A4
@@ -108,8 +108,8 @@
 #define X_DIR_LOW A1                              // X Direction Low (Cartesian negative x : left) - digital output pin A1
 #define Y_DIR_HIGH A2                             // Y Direction High (Cartesian positive y : up) - analog input pin A2
 #define Y_DIR_LOW A3                             // Y Direction Low (Cartesian negative y : down) - analog input pin A10
-*/
 
+/*
 #define MODE_SELECT 12                            // LipSync Mode Select - USB mode (comm_mode = 0; jumper on) or Bluetooth mode (comm_mode = 1; jumper off) - digital input pin 12 (internally pulled-up)
 #define PUSH_BUTTON_UP 8                          // Cursor Control Button 1: UP - digital input pin 8 (internally pulled-up)
 #define PUSH_BUTTON_DOWN 7                        // Cursor Control Button 2: DOWN - digital input pin 7 (internally pulled-up)
@@ -124,7 +124,7 @@
 #define X_DIR_LOW A1                              // X Direction Low (Cartesian negative x : left) - digital output pin A1
 #define Y_DIR_HIGH A2                             // Y Direction High (Cartesian positive y : up) - analog input pin A2
 #define Y_DIR_LOW A10                             // Y Direction Low (Cartesian negative y : down) - analog input pin A10
-
+*/
 
 //***VARIABLE DECLARATION***//
 
@@ -327,34 +327,64 @@ void loop() {
   xl_yh = ((xl - x_left) > 0 ? (float)(xl - x_left) : 0) + ((yh - y_up) > 0 ? (float)(yh - y_up) : 0);
   xl_yl = ((xl - x_left) > 0 ? (float)(xl - x_left) : 0) + ((yl - y_down) > 0 ? (float)(yl - y_down) : 0);
 */
-  if ((xh_yh > xh_yh_radius) || (xh_yl > xh_yl_radius) || (xl_yl > xl_yl_radius) || (xl_yh > xl_yh_radius)) {
+if ((xh_yh > xh_yh_radius) || (xh_yl > xh_yl_radius) || (xl_yl > xl_yl_radius) || (xl_yh > xl_yh_radius)) {
 
     poll_counter++;
 
     delay(20);    // originally 15 ms
-
+    //Serial.print("poll_counter");
+    //Serial.println(poll_counter);
     if (poll_counter >= 3) {
-
+      comm_mode = 0;        //Albert
+      //Serial.print("comm_mode: ");
+      //Serial.println(comm_mode);
       if (comm_mode == 0) {
 
         if ((xh_yh >= xh_yl) && (xh_yh >= xl_yh) && (xh_yh >= xl_yl)) {
           //Serial.println("quad1");
+          Serial.print("xh_yh:");
           Mouse.move(x_cursor_high(xh), y_cursor_high(yh), 0);
+          //Serial.print(xh);
+          Serial.print(x_cursor_high(xh));
+          Serial.print("  y:");
+          //Serial.println(yh);
+          Serial.println(y_cursor_high(yh));
           delay(cursor_delay);
           poll_counter = 0;
         } else if ((xh_yl > xh_yh) && (xh_yl > xl_yl) && (xh_yl > xl_yh)) {
           //Serial.println("quad4");
+          Serial.print("xh_yl:");
+          //Serial.println(xh_yl);
           Mouse.move(x_cursor_high(xh), y_cursor_low(yl), 0);
+          //Serial.print(xh);
+          Serial.print(x_cursor_high(xh));
+          Serial.print("  y:");
+          //Serial.println(yl);
+          Serial.println(y_cursor_high(yl));
           delay(cursor_delay);
           poll_counter = 0;
         } else if ((xl_yl >= xh_yh) && (xl_yl >= xh_yl) && (xl_yl >= xl_yh)) {
           //Serial.println("quad3");
+          Serial.print("xl_yl:");
+          //Serial.println(xl_yl);
           Mouse.move(x_cursor_low(xl), y_cursor_low(yl), 0);
+          //Serial.print(xl);
+          Serial.print(x_cursor_high(xl));
+          Serial.print("  y:");
+          //Serial.println(yl);
+          Serial.println(y_cursor_high(yl));
           delay(cursor_delay);
           poll_counter = 0;
         } else if ((xl_yh > xh_yh) && (xl_yh >= xh_yl) && (xl_yh >= xl_yl)) {
           //Serial.println("quad2");
+          Serial.print("xl_yh:");
+          //Serial.println(xl_yh);
           Mouse.move(x_cursor_low(xl), y_cursor_high(yh), 0);
+          //Serial.print(xl);
+          Serial.print(x_cursor_high(xl));
+          Serial.print("  y:");
+          //Serial.println(yh);
+          Serial.println(y_cursor_high(yh));
           delay(cursor_delay);
           poll_counter = 0;
         }
@@ -362,21 +392,29 @@ void loop() {
 
         if ((xh_yh >= xh_yl) && (xh_yh >= xl_yh) && (xh_yh >= xl_yl)) {
           //Serial.println("quad1");
+          //Serial.print("xh_yh:");
+          //Serial.println(xh_yh);
           mouseCommand(cursor_click_status, x_cursor_high(xh), y_cursor_high(yh), 0);
           delay(cursor_delay);
           poll_counter = 0;
         } else if ((xh_yl > xh_yh) && (xh_yl > xl_yl) && (xh_yl > xl_yh)) {
           //Serial.println("quad4");
+          //Serial.print("xh_yl:");
+          //Serial.println(xh_yl);
           mouseCommand(cursor_click_status, x_cursor_high(xh), y_cursor_low(yl), 0);
           delay(cursor_delay);
           poll_counter = 0;
         } else if ((xl_yl >= xh_yh) && (xl_yl >= xh_yl) && (xl_yl >= xl_yh)) {
           //Serial.println("quad3");
+          //Serial.print("xl_yl:");
+          //Serial.println(xl_yl);
           mouseCommand(cursor_click_status, x_cursor_low(xl), y_cursor_low(yl), 0);
           delay(cursor_delay);
           poll_counter = 0;
         } else if ((xl_yh > xh_yh) && (xl_yh >= xh_yl) && (xl_yh >= xl_yl)) {
           //Serial.println("quad2");
+          //Serial.print("xl_yh:");
+          //Serial.println(xl_yh);
           mouseCommand(cursor_click_status, x_cursor_low(xl), y_cursor_high(yh), 0);
           delay(cursor_delay);
           poll_counter = 0;
@@ -384,6 +422,7 @@ void loop() {
       }
     }
   }
+
 
   //cursor speed control push button functions below
 
@@ -1145,20 +1184,12 @@ void Joystick_Calibration(void) {
   EEPROM.put(18, xl_comp);
   delay(10);
   EEPROM.put(22, xh_max);
-  Serial.print("xh_max: ");
-  Serial.println(xh_max);
   delay(10);
   EEPROM.put(24, xl_max);
-  Serial.print("xl_max: ");
-  Serial.println(xl_max);
   delay(10);
   EEPROM.put(26, yh_max);
-  Serial.print("yh_max: ");
-  Serial.println(yh_max);
   delay(10);
   EEPROM.put(28, yl_max);
-  Serial.print("yl_max: ");
-  Serial.println(yl_max);
   delay(10);
 
   blink(5, 250, 3);
@@ -1286,3 +1317,4 @@ void Set_Default(void) {
 
   }
 }
+
