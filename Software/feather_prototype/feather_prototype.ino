@@ -10,7 +10,7 @@
 #define PUSH_BUTTON_UP 10                          // Cursor Control Button 1: UP - digital input pin 8 (internally pulled-up)4
 #define PUSH_BUTTON_DOWN 9                        // Cursor Control Button 2: DOWN - digital input pin 7 (internally pulled-up)
 #define LED_1 11                                   // LipSync LED Color1 : GREEN - digital output pin 5
-#define LED_2 5                                   // LipSync LED Color2 : RED - digital outputpin 4
+#define LED_2 6                                   // LipSync LED Color2 : RED - digital outputpin 4
 
 #define TRANS_CONTROL A3                          // Bluetooth Transistor Control Pin - digital output pin A3
 #define PIO4 A4                                   // Bluetooth PIO4 Command Pin - digital output pin A4
@@ -41,13 +41,11 @@ int cursor_delay = 20;
 bool bluetooth_mode;                       // Bluetooth mode toggle, if true then bluetooth mode is initialized
 
 void setup() {
- digitalWrite(11, HIGH);
- delay(500);
- digitalWrite(11, LOW);
 
- digitalWrite(5, HIGH);
- delay(500);
- digitalWrite(5,LOW);
+  pinMode(11, OUTPUT);
+  pinMode(6, OUTPUT);
+  
+  blink(3, 250, 1);                         // Booting up, LED on
 
   bluetooth_mode = false;                         // initialize into wired or bluetooth mode
 
@@ -80,6 +78,9 @@ void setup() {
   delay(10);
 
   y_down = analogRead(Y_DIR_LOW);             // Initial neutral y-low value of joystick
+
+
+  blink(4, 250, 3);                           // End initialization
 }
 
 void loop() {
@@ -292,5 +293,45 @@ int x_cursor_low(int j) {
     }
   } else {
     return 0;
+  }
+}
+
+//***LED BLINK FUNCTIONS***//
+
+void blink(int num_Blinks, int delay_Blinks, int LED_number ) {
+  if (num_Blinks < 0) num_Blinks *= -1;
+
+  switch (LED_number) {
+    case 1: {
+        for (int i = 0; i < num_Blinks; i++) {
+          digitalWrite(LED_1, HIGH);
+          delay(delay_Blinks);
+          digitalWrite(LED_1, LOW);
+          delay(delay_Blinks);
+        }
+        break;
+      }
+    case 2: {
+        for (int i = 0; i < num_Blinks; i++) {
+          digitalWrite(LED_2, HIGH);
+          delay(delay_Blinks);
+          digitalWrite(LED_2, LOW);
+          delay(delay_Blinks);
+        }
+        break;
+      }
+    case 3: {
+        for (int i = 0; i < num_Blinks; i++) {
+          digitalWrite(LED_1, HIGH);
+          delay(delay_Blinks);
+          digitalWrite(LED_1, LOW);
+          delay(delay_Blinks);
+          digitalWrite(LED_2, HIGH);
+          delay(delay_Blinks);
+          digitalWrite(LED_2, LOW);
+          delay(delay_Blinks);
+        }
+        break;
+      }
   }
 }
